@@ -20,7 +20,7 @@ binmode(STDOUT, ':utf8');
 
 
 
-my @words = r "SELECT count(*) as compte, luthorword.* FROM luthorword GROUP BY word,type ORDER BY idWordExt ASC LIMIT 300000";
+my @words = r "SELECT count(*) as compte, luthorword.* FROM luthorword GROUP BY word,type ORDER BY idWordExt ASC LIMIT 1000000";
 
 #Lines
 my %outputs;
