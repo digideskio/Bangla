@@ -21,11 +21,14 @@ my $doPage = 1;
 
 my @mod = qw/un le une aux des au de mi/;
 
-my $mw = MediaWiki::API->new();
-$mw->{config}->{api_url} = 'http://fr.wiktionary.org/w/api.php';
-$mw->login( { lgname => 'Arthurwolf', lgpassword => 'z5mftdsc7' } ) || die $mw->{error}->{code} .': '. $mw->{error}->{details};
+
 
 my $file = $ARGV[0];
+
+my $mw = MediaWiki::API->new();
+$mw->{config}->{api_url} = 'http://fr.wiktionary.org/w/api.php';
+$mw->login( { lgname => 'Arthurwolf', lgpassword => shift @ARGV } ) || die $mw->{error}->{code} .': '. $mw->{error}->{details};
+
 binmode(STDOUT, ':utf8');
 my $pages = Parse::MediaWikiDump::Pages->new($file);
 my $rt = JavaScript::Runtime->new();
