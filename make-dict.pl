@@ -26,7 +26,7 @@ my @words = r "SELECT count(*) as compte, luthorword.* FROM luthorword GROUP BY 
 my %outputs;
 
 my $rt = JavaScript::Runtime->new();
-my $script = slurp "lang/fr/links.js";
+my $script = slurp "lang/fr/add-links.js";
 my $js = $rt->create_context();
 
 $js->bind_function( say           => sub { print @_,"\n"; } );
