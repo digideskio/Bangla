@@ -32,7 +32,7 @@ $mw->login( { lgname => 'Arthurwolf', lgpassword => shift @ARGV } ) || die $mw->
 binmode(STDOUT, ':utf8');
 my $pages = Parse::MediaWikiDump::Pages->new($file);
 my $rt = JavaScript::Runtime->new();
-my $script = slurp "lang/fr/extract-auto.js";
+my $script = slurp "lang/fr/extract.js";
 my $js = $rt->create_context();
 $js->bind_function( nextPage => sub {
                         my $page = $pages->next();
