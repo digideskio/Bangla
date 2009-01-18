@@ -27,7 +27,7 @@ my $file = $ARGV[0];
 
 my $mw = MediaWiki::API->new();
 $mw->{config}->{api_url} = 'http://fr.wiktionary.org/w/api.php';
-$mw->login( { lgname => 'Arthurwolf', lgpassword => shift $ARGV[1] } ) || die $mw->{error}->{code} .': '. $mw->{error}->{details};
+$mw->login( { lgname => 'Arthurwolf', lgpassword => $ARGV[1] } ) || die $mw->{error}->{code} .': '. $mw->{error}->{details};
 
 binmode(STDOUT, ':utf8');
 my $pages = Parse::MediaWikiDump::Pages->new($file);
