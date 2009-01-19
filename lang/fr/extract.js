@@ -14,7 +14,7 @@ for each ( var word in page.words ){
     if( word.type == "flex-verb" ){ continue; }
     //Verb flexions
     if( word.type == "verb" ){
-        addVerbFlexions( word );
+        word.addVerbFlexions();
         continue;
     }
 
