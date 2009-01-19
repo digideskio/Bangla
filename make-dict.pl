@@ -44,7 +44,7 @@ while ( @words > 0 ) {
 
 #Outputs data to file
 
-open( DICT , ">./lang/dict/fr/dict/4.0.dict" );
+open( DICT , ">./lang/fr/dict/4.0.dict" );
 binmode(DICT, ':utf8');
 print DICT "CAPITALIZED-WORDS: J- or O- or (S+ & (({\@CO-} & {C-}) or R-)) or SI-;\nANDABLE-CONNECTORS: S+ & S- & A+ & A- & MV+ & MV- & D- & O+ & O- &\nJ+ & J- & C-;\n\n\n";
 print DICT "\n\n\n\n\n";
