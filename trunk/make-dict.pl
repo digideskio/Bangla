@@ -37,10 +37,9 @@ $js->bind_function( addWord       => sub { my ( $word , $link ) = @_; print "$wo
 $js->bind_function( 'system'      => sub { my $cmd = join(" " , @_); return `$cmd`; } );
 
 #Now call the javascript to extract word information from the base
-my $compiled;
-print "JSCompileError : " , $@, "\n" unless ( $compiled = $js->compile( $script ) );
+my $script =  $script ;
 while ( @words > 0 ) {
-    print "JSRuntimeError : " , $@, "\n" unless ( $compiled->exec() );
+    print "JSError : " , $@, "\n" unless ( $js->eval( $script ) );
 }
 
 #Outputs data to file
@@ -50,7 +49,7 @@ binmode(DICT, ':utf8');
 print DICT "CAPITALIZED-WORDS: J- or O- or (S+ & (({\@CO-} & {C-}) or R-)) or SI-;\nANDABLE-CONNECTORS: S+ & S- & A+ & A- & MV+ & MV- & D- & O+ & O- &\nJ+ & J- & C-;\n\n\n";
 print DICT "\n\n\n\n\n";
 while (my ($link, $words) = each %outputs ) {
-    print DICT join(" ", @{$words} ) , " : \n " , $link , " ;\n\n";
+    print DICT join(" , ", @{$words} ) , " : \n " , $link , " ;\n\n";
 }
 close( DICT );
 
