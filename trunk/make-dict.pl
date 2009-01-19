@@ -37,9 +37,10 @@ $js->bind_function( addWord       => sub { my ( $word , $link ) = @_; print "$wo
 $js->bind_function( 'system'      => sub { my $cmd = join(" " , @_); return `$cmd`; } );
 
 #Now call the javascript to extract word information from the base
-my $script =  $script ;
+my $compiled;
+print "JSCompileError : " , $@, "\n" unless ( $compiled = $js->compile( $script ) );
 while ( @words > 0 ) {
-    print "JSError : " , $@, "\n" unless ( $js->eval( $script ) );
+    print "JSRuntimeError : " , $@, "\n" unless ( $compiled->exec() );
 }
 
 #Outputs data to file
