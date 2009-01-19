@@ -49,7 +49,7 @@ binmode(DICT, ':utf8');
 print DICT "CAPITALIZED-WORDS: J- or O- or (S+ & (({\@CO-} & {C-}) or R-)) or SI-;\nANDABLE-CONNECTORS: S+ & S- & A+ & A- & MV+ & MV- & D- & O+ & O- &\nJ+ & J- & C-;\n\n\n";
 print DICT "\n\n\n\n\n";
 while (my ($link, $words) = each %outputs ) {
-    print DICT join(" , ", @{$words} ) , " : \n " , $link , " ;\n\n";
+    print DICT join(" ", @{$words} ) , " : \n " , $link , " ;\n\n";
 }
 close( DICT );
 
