@@ -104,21 +104,10 @@ function Word( data , type , lang , item ){
 
     //if word changes
     if( match =  /^{{-(.+?)-\|(.+?)}}\n\'\'\'(.+?)\'\'\'/mg.exec(item) ){
-        this.word = match[3].replace(/(([\W\[\]])|(\(.*?\)))/g,'');
+        this.word = match[3];//.replace(/(([\W\[\]])|(\(.*?\)))/g,'');
     }
 }
 
-//arthur@arthur-laptop:~/dev/svn/js$ perl js.pl -e 'var a = <word word="coucou" function="adj"></word>;a.word += <possible><left><link to="noun"  type="bz37"/></left><right><link to="verb"/></right></possible>;say(a);'
-//<word word="coucou" function="adj">
-//  <possible>
-//    <left>
-//      <link to="noun" type="bz37"/>
-//    </left>
-//    <right>
-//      <link to="verb"/>
-//    </right>
-//  </possible>
-//</word>
 
 
 
