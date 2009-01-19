@@ -3,15 +3,10 @@ var page = new Page( nextPage() );
 
 //For each function of this word
 for each ( var word in page.words ){
-    if( !( /fr/.test(word.lang) )  ){continue;}
-    if( ( /fro/.test(word.lang) )  ){continue;}
-    if( /^(Wiki|Wikt|Annex|Mod.le|PAGENAME|Aide|sans bo.tes d.roulantes)/.test(word.word) ){continue;}
-    if( ! /\w/.test(word.word) || ! /\w/.test(word.type) ){
-        say("#Skipping : " + word.word + " -> " + word.type );
-        continue;
-    }
-    //Extract properties for this word's function
 
+    if( !word.isValid() ){ continue; }
+
+    //Extract properties for this word's function
     //Gender and number
     word = genderNumber( word );
 
@@ -104,8 +99,18 @@ function Word( data , type , lang , item ){
 
     //if word changes
     if( match =  /^{{-(.+?)-\|(.+?)}}\n\'\'\'(.+?)\'\'\'/mg.exec(item) ){
-        this.word = match[3].replace(/([\[\]\(\)])/g,'');
+        this.word = match[3];
     }
+
+    this.isValid = function(){
+        if( !( /fr/.test(this.lang) )  ){ return(0); }
+        if( ( /fro/.test(this.lang) )  ){ return(0); }
+        if( /^(Wiki|Wikt|Annex|Mod.le|PAGENAME|Aide|sans bo.tes d.roulantes)/.test(this.word) ){ return(0); }
+        if( /([\[\]\(\)])/g.test(this.word) ){ say("#Skipping : " + this.word + " -> " + this.type ); return(0); }
+        if( ! /\w/.test(this.word) || ! /\w/.test(this.type) ){ return(0); }
+        return(1);
+    };
+
 }
 
 
