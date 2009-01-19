@@ -19,10 +19,8 @@ for each ( var word in page.words ){
     }
 
     wordAdd(word);
+
 }
-
-
-
 
 
 function Page( data ){
@@ -108,9 +106,7 @@ function Word( data , type , lang , item ){
                 }
             }
         }
-    }
-
-
+    };
 }
 
 
