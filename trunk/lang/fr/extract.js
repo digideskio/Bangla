@@ -48,6 +48,8 @@ function Word( data , type , lang , item ){
         this.word = match[3];
     }
 
+    this.word.replace(/ /,"_");
+
     this.isValid = function(){
         if( !( /fr/.test(this.lang) )  ){ return(0); }
         if( ( /fro/.test(this.lang) )  ){ return(0); }
