@@ -23,42 +23,7 @@ for each ( var word in page.words ){
 
 
 
-function addVerbFlexions( word ){
-    //Add each flexion for this verb from 'verbiste'
-    var flexions = system( "french-conjugator " + word.word );
-    for each ( var Time in flexions.split( /(?=- .*?:)/gm ) ){
-        var verbTime;
-        var words = Time.split( /\n/g );
-        for( var verbNumber = 0; verbNumber < words.length; verbNumber++ ){
-            var flexion = words[verbNumber];
-            if( verbNumber == 0 ){
-                verbTime = flexion;
-                verbTime = verbTime.replace(/\W/g,'');
-            }else{
-                if( flexion == "-" ){ continue; }
-                var addWord = word;
-                addWord.word = flexion;
-                if( verbTime != "infinitivepresent" ){ addWord.type = "flex-verb"; }
-                if( addWord.word == '' ){ continue; }
-                addWord.verbTime = verbTime;
-                switch( verbTime ){
-                    case "participlepast"    : {
-                        switch( verbNumber ){
-                            case 1 : { addWord.gender = "m"; addWord.number = "s"; break; }
-                            case 2 : { addWord.gender = "m"; addWord.number = "p"; break; }
-                            case 3 : { addWord.gender = "f"; addWord.number = "s"; break; }
-                            case 4 : { addWord.gender = "f"; addWord.number = "p"; break; }
-                        }
-                    }
-                    case "infinitivepresent" : { break;}
-                    default                  : { addWord.verbNumber = verbNumber; break; }
-                }
-                wordAdd( addWord );
-            }
-        }
-    }
 
-}
 
 function Page( data ){
     this.data = data;
@@ -107,6 +72,43 @@ function Word( data , type , lang , item ){
             if( /({{inv(\|.*?)*}})/gi.test(Line)                        ){ this.number = "inv"; }
         }
     };
+
+    this.addVerbFlexions = function(){
+        //Add each flexion for this verb from 'verbiste'
+        word = this;
+        var flexions = system( "french-conjugator " + word.word );
+        for each ( var Time in flexions.split( /(?=- .*?:)/gm ) ){
+            var verbTime;
+            var words = Time.split( /\n/g );
+            for( var verbNumber = 0; verbNumber < words.length; verbNumber++ ){
+                var flexion = words[verbNumber];
+                if( verbNumber == 0 ){
+                    verbTime = flexion;
+                    verbTime = verbTime.replace(/\W/g,'');
+                }else{
+                    if( flexion == "-" ){ continue; }
+                    var addWord = word;
+                    addWord.word = flexion;
+                    if( verbTime != "infinitivepresent" ){ addWord.type = "flex-verb"; }
+                    if( addWord.word == '' ){ continue; }
+                    addWord.verbTime = verbTime;
+                    switch( verbTime ){
+                        case "participlepast"    : {
+                            switch( verbNumber ){
+                                case 1 : { addWord.gender = "m"; addWord.number = "s"; break; }
+                                case 2 : { addWord.gender = "m"; addWord.number = "p"; break; }
+                                case 3 : { addWord.gender = "f"; addWord.number = "s"; break; }
+                                case 4 : { addWord.gender = "f"; addWord.number = "p"; break; }
+                            }
+                        }
+                        case "infinitivepresent" : { break;}
+                        default                  : { addWord.verbNumber = verbNumber; break; }
+                    }
+                    wordAdd( addWord );
+                }
+            }
+        }
+    }
 
 
 }
