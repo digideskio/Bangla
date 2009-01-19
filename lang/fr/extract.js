@@ -104,7 +104,7 @@ function Word( data , type , lang , item ){
 
     //if word changes
     if( match =  /^{{-(.+?)-\|(.+?)}}\n\'\'\'(.+?)\'\'\'/mg.exec(item) ){
-        this.word = match[3];//.replace(/(([\W\[\]])|(\(.*?\)))/g,'');
+        this.word = match[3].replace(/([\[\]\(\)])/g,'');
     }
 }
 
