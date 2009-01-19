@@ -17,7 +17,8 @@ while( func = word.functions.pop() ){
     switch( type ){
 
         case "nom": {
-            func.links.push(" {+@A:genNum:} , +D:genNum: , {@A:genNum:+} , ( +O or S:genNum:+ )   # As an Object or Subject to a Verb");
+            func.links.push(" {+@A:genNum:} , +D:genNum: , {@A:genNum:+} , S:genNum:+   # As a Subject to a Verb");
+            func.links.push(" {+@A:genNum:} , +D:genNum: , {@A:genNum:+} , +O           # As an Object to a Verb");
             break;
         }
 
