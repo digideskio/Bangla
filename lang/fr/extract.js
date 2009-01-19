@@ -75,8 +75,7 @@ function Word( data , type , lang , item ){
 
     this.addVerbFlexions = function(){
         //Add each flexion for this verb from 'verbiste'
-        word = this;
-        var flexions = system( "french-conjugator " + word.word );
+        var flexions = system( "french-conjugator " + this.word );
         for each ( var Time in flexions.split( /(?=- .*?:)/gm ) ){
             var verbTime;
             var words = Time.split( /\n/g );
@@ -87,7 +86,7 @@ function Word( data , type , lang , item ){
                     verbTime = verbTime.replace(/\W/g,'');
                 }else{
                     if( flexion == "-" ){ continue; }
-                    var addWord = word;
+                    var addWord = this;
                     addWord.word = flexion;
                     if( verbTime != "infinitivepresent" ){ addWord.type = "flex-verb"; }
                     if( addWord.word == '' ){ continue; }
