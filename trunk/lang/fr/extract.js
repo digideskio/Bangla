@@ -8,7 +8,7 @@ for each ( var word in page.words ){
 
     //Extract properties for this word's function
     //Gender and number
-    word = genderNumber( word );
+    word.genderNumber();
 
     //We do verb flexions ourself since wiktionnary don't have all of them
     if( word.type == "flex-verb" ){ continue; }
@@ -21,24 +21,6 @@ for each ( var word in page.words ){
     wordAdd(word);
 }
 
-function genderNumber( word ){
-
-    for each ( var Line in word.content.split( /\n/g  ) ){
-        if(/({{msing(\|.*?)*}}|# Masculin singulier|{{fr-accord-(.*?))/gi.test(Line)){word.gender="m";word.number="s";}
-        if( /({{fsing(\|.*?)*}}|# F.minin singulier)/gi.test(Line)  ){ word.gender = "f"; word.number = "s"; }
-        if( /({{mp(l*)(\|.*?)*}}|# Masculin Pluriel)/gi.test(Line)  ){ word.gender = "m"; word.number = "p"; }
-        if( /({{fp(l*)(\|.*?)*}}|# F.minin Pluriel)/gi.test(Line)   ){ word.gender = "f"; word.number = "p"; }
-        if( /({{m(\|.*?)*}})/gi.test(Line)                          ){ word.gender = "m"; }
-        if( /({{f(\|.*?)*}})/gi.test(Line)                          ){ word.gender = "f"; }
-        if( /({{mf(\|.*?)*}})/gi.test(Line)                         ){ word.gender = "mf";}
-        if( /({{p(\|.*?)*}}|# Pluriel d)/gi.test(Line)              ){ word.number = "p"; }
-        if( /({{s(\|.*?)*}}|# Singulier d|{{fr\-r.g)/gi.test(Line)  ){ word.number = "s"; }
-        if( /({{inv(\|.*?)*}})/gi.test(Line)                        ){ word.number = "inv"; }
-    }
-
-    return(word);
-
-}
 
 
 function addVerbFlexions( word ){
@@ -110,6 +92,22 @@ function Word( data , type , lang , item ){
         if( ! /\w/.test(this.word) || ! /\w/.test(this.type) ){ return(0); }
         return(1);
     };
+
+    this.genderNumber = function(){
+        for each ( var Line in this.content.split( /\n/g  ) ){
+            if(/({{msing(\|.*?)*}}|# Masculin singulier|{{fr-accord-(.*?))/gi.test(Line)){this.gender="m";this.number="s";}
+            if( /({{fsing(\|.*?)*}}|# F.minin singulier)/gi.test(Line)  ){ this.gender = "f"; this.number = "s"; }
+            if( /({{mp(l*)(\|.*?)*}}|# Masculin Pluriel)/gi.test(Line)  ){ this.gender = "m"; this.number = "p"; }
+            if( /({{fp(l*)(\|.*?)*}}|# F.minin Pluriel)/gi.test(Line)   ){ this.gender = "f"; this.number = "p"; }
+            if( /({{m(\|.*?)*}})/gi.test(Line)                          ){ this.gender = "m"; }
+            if( /({{f(\|.*?)*}})/gi.test(Line)                          ){ this.gender = "f"; }
+            if( /({{mf(\|.*?)*}})/gi.test(Line)                         ){ this.gender = "mf";}
+            if( /({{p(\|.*?)*}}|# Pluriel d)/gi.test(Line)              ){ this.number = "p"; }
+            if( /({{s(\|.*?)*}}|# Singulier d|{{fr\-r.g)/gi.test(Line)  ){ this.number = "s"; }
+            if( /({{inv(\|.*?)*}})/gi.test(Line)                        ){ this.number = "inv"; }
+        }
+    };
+
 
 }
 
