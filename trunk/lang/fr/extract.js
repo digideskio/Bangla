@@ -38,6 +38,7 @@ function Page( data ){
 }
 
 function Word( data , type , lang , item ){
+    this.data        = data;
     this.word        = data.word;
     this.idWordExt   = data.idWordExt;
     this.type        = type;
@@ -86,7 +87,7 @@ function Word( data , type , lang , item ){
                     verbTime = verbTime.replace(/\W/g,'');
                 }else{
                     if( flexion == "-" ){ continue; }
-                    var addWord = this;
+                    var addWord = new Word( this.data , this.type , this.lang , this.content );
                     addWord.word = flexion;
                     if( verbTime != "infinitivepresent" ){ addWord.type = "flex-verb"; }
                     if( addWord.word == '' ){ continue; }
