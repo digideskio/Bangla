@@ -52,7 +52,7 @@ function Word( data , type , lang , item ){
         if( !( /fr/.test(this.lang) )  ){ return(0); }
         if( ( /fro/.test(this.lang) )  ){ return(0); }
         if( /^(Wiki|Wikt|Annex|Mod.le|PAGENAME|Aide|sans bo.tes d.roulantes)/.test(this.word) ){ return(0); }
-        if( /([\[\]\(\)])/g.test(this.word) ){ say("#Skipping : " + this.word + " -> " + this.type ); return(0); }
+        if( /([\[\]\(\)\&])/g.test(this.word) ){ say("#Skipping : " + this.word + " -> " + this.type ); return(0); }
         if( ! /\w/.test(this.word) || ! /\w/.test(this.type) ){ return(0); }
         return(1);
     };
