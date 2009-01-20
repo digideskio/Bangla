@@ -1,4 +1,3 @@
-
 #include lang/fr/lib/extract.Page.class.js
 #include lang/fr/lib/extract.Word.class.js
 
