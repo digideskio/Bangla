@@ -124,13 +124,18 @@ sub isIn{
 
 
 sub extendIncludes{
-    my $script = $_[0];
+    my ($script) = @_;
+    my $ret;
     for ( split("\n",$script) ) {
-        if ( $_ =~ m/^\#include (.*)$/ ) {
+        my $line = $_;
+        if ( $line =~ m/^\#include (.*)$/ ) {
             my $filename = $1;
             my $toAdd = slurp $filename;
             $toAdd = extendIncludes( $toAdd );
-            $script =~ s/^\#include $filename$/$toAdd/g;
+            $ret .= $toAdd . "\n";
+        }else {
+            $ret .= $line . "\n";
+            
         }
     }
     return $script;
