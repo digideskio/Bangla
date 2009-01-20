@@ -127,7 +127,7 @@ sub extendIncludes{
     for ( split("\n",$script) ) {
         if ( $_ =~ m/^\#include (.*)$/ ) {
             my $filename = $1;
-            $toAdd = slurp $filename;
+            my $toAdd = slurp $filename;
             $toAdd = extendIncludes( $toAdd );
             $script =~ s/^\#include $filename$/$toAdd/g;
         }
