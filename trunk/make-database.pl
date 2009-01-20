@@ -33,6 +33,7 @@ binmode(STDOUT, ':utf8');
 my $pages = Parse::MediaWikiDump::Pages->new($file);
 my $rt = JavaScript::Runtime->new();
 my $script = slurp "lang/fr/extract.js";
+$script = extendIncludes($script);
 my $js = $rt->create_context();
 $js->bind_function( nextPage => sub {
                         my $page = $pages->next();
@@ -63,9 +64,11 @@ $js->bind_function( wordAdd  => \&addWord );
 $js->bind_function( 'system' => sub { my $cmd = join(" " , @_); return decode("UTF-8",`$cmd`); } );
 
 #Now call the javascript to extract word information from the base
-my $script =  $script ;
 while ( $doPage ) {
-    print "JSError : " , $@, "\n" unless ( $js->eval( $script ) );
+    unless ( $js->eval( $script ) ){
+        print "JSError : ", " " , $@, "\n";
+        sleep 2;
+    };
 }
 
 
@@ -116,4 +119,18 @@ sub isIn{
         return 1 if $value eq $_;
     }
     return 0;
+}
+
+
+sub extendIncludes{
+    my $script = $_;
+    for ( split("\n",$script) ) {
+        if ( $_ =~ m/^\#include (.*)$/ ) {
+            my $filename = $1;
+            $toAdd = slurp $filename;
+            $toAdd = extendIncludes( $toAdd );
+            $script =~ s/^\#include $filename$/$toAdd/g;
+        }
+    }
+    return $script;
 }
