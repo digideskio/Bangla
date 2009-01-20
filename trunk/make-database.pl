@@ -124,7 +124,7 @@ sub isIn{
 
 
 sub extendIncludes{
-    my $script = $_;
+    my $script = $_[0];
     for ( split("\n",$script) ) {
         if ( $_ =~ m/^\#include (.*)$/ ) {
             my $filename = $1;
