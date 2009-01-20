@@ -139,5 +139,5 @@ sub extendIncludes{
             
         }
     }
-    return $script;
+    return $ret;
 }
