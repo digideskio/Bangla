@@ -34,6 +34,7 @@ my $pages = Parse::MediaWikiDump::Pages->new($file);
 my $rt = JavaScript::Runtime->new();
 my $script = slurp "lang/fr/extract.js";
 $script = extendIncludes($script);
+print $script;
 my $js = $rt->create_context();
 $js->bind_function( nextPage => sub {
                         my $page = $pages->next();
