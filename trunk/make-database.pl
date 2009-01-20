@@ -34,7 +34,6 @@ my $pages = Parse::MediaWikiDump::Pages->new($file);
 my $rt = JavaScript::Runtime->new();
 my $script = slurp "lang/fr/extract.js";
 $script = extendIncludes($script);
-print $script;
 my $js = $rt->create_context();
 $js->bind_function( nextPage => sub {
                         my $page = $pages->next();
@@ -130,13 +129,11 @@ sub extendIncludes{
         my $line = $_;
         if ( $line =~ m/^\#include (.*)$/ ) {
             my $filename = $1;
-            print "INCLUDING $filename\n";
             my $toAdd = slurp $filename;
             $toAdd = extendIncludes( $toAdd );
             $ret .= $toAdd . "\n";
         }else {
             $ret .= $line . "\n";
-            
         }
     }
     return $ret;
