@@ -130,6 +130,7 @@ sub extendIncludes{
         my $line = $_;
         if ( $line =~ m/^\#include (.*)$/ ) {
             my $filename = $1;
+            print "INCLUDING $filename\n";
             my $toAdd = slurp $filename;
             $toAdd = extendIncludes( $toAdd );
             $ret .= $toAdd . "\n";
