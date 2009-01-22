@@ -12,7 +12,7 @@ function Word( data , type , lang , item ){
         this.word = match[3];
     }
 
-    this.word.replace(/ /,"_");
+    this.word.replace(/\s/,"_");
 
     this.isValid = function(){
         if( !( /fr/.test(this.lang) )  ){ return(0); }
