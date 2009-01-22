@@ -52,7 +52,7 @@ function Word( data , type , lang , item ){
                 }else{
                     if( flexionS == "-" ){ continue; }
 
-                    for each ( var flexion in flexionS.split( /(\,\s*)/gm ) ){
+                    for each ( var flexion in flexionS.split( /\,\s*/gm ) ){
 
                         var addWord = new Word( this.data , this.type , this.lang , this.content );
                         addWord.word = flexion;
