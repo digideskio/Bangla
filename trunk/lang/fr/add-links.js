@@ -65,6 +65,7 @@ function toGSyntax(word){
 
     if( links.length == 0 ){ return; }
     if( /PAGENAME/.test(word.word) ){ return; }
+    word.word.replace( /\s/g , "_" );
     addWord( word.word + "." + word.type , links.join(" or " ) );
 
 }
