@@ -45,30 +45,36 @@ function Word( data , type , lang , item ){
             var verbTime;
             var words = Time.split( /\n/g );
             for( var verbNumber = 0; verbNumber < words.length; verbNumber++ ){
-                var flexion = words[verbNumber];
+                var flexionS = words[verbNumber];
                 if( verbNumber == 0 ){
-                    verbTime = flexion;
+                    verbTime = flexionS;
                     verbTime = verbTime.replace(/\W/g,'');
                 }else{
-                    if( flexion == "-" ){ continue; }
-                    var addWord = new Word( this.data , this.type , this.lang , this.content );
-                    addWord.word = flexion;
-                    if( verbTime != "infinitivepresent" ){ addWord.type = "flex-verb"; }
-                    if( addWord.word == '' ){ continue; }
-                    addWord.verbTime = verbTime;
-                    switch( verbTime ){
-                        case "participlepast"    : {
-                            switch( verbNumber ){
-                                case 1 : { addWord.gender = "m"; addWord.number = "s"; break; }
-                                case 2 : { addWord.gender = "m"; addWord.number = "p"; break; }
-                                case 3 : { addWord.gender = "f"; addWord.number = "s"; break; }
-                                case 4 : { addWord.gender = "f"; addWord.number = "p"; break; }
+                    if( flexionS == "-" ){ continue; }
+
+                    for each ( var flexion in flexionS.split( /(\,\s*)/gm ) ){
+
+                        var addWord = new Word( this.data , this.type , this.lang , this.content );
+                        addWord.word = flexion;
+                        if( verbTime != "infinitivepresent" ){ addWord.type = "flex-verb"; }
+                        if( addWord.word == '' ){ continue; }
+                        addWord.verbTime = verbTime;
+                        switch( verbTime ){
+                            case "participlepast"    : {
+                                switch( verbNumber ){
+                                    case 1 : { addWord.gender = "m"; addWord.number = "s"; break; }
+                                    case 2 : { addWord.gender = "m"; addWord.number = "p"; break; }
+                                    case 3 : { addWord.gender = "f"; addWord.number = "s"; break; }
+                                    case 4 : { addWord.gender = "f"; addWord.number = "p"; break; }
+                                }
                             }
+                            case "infinitivepresent" : { break;}
+                            default                  : { addWord.verbNumber = verbNumber; break; }
                         }
-                        case "infinitivepresent" : { break;}
-                        default                  : { addWord.verbNumber = verbNumber; break; }
+                        wordAdd( addWord );
+
                     }
-                    wordAdd( addWord );
+
                 }
             }
         }
