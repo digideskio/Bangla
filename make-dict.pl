@@ -14,7 +14,7 @@ use Encode qw/encode decode/;
 use Data::Dumper;
 
 #Connect to Mysql
-#mysqlcon '#p:localhost:piki:root:magda';
+mysqlcon '#p:localhost:piki:root:magda';
 my $dbh = DBI->connect( "DBI:mysql:piki:localhost;mysql_compression=1", 'root', 'magda' ); 
 
 binmode(STDOUT, ':utf8');
