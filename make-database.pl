@@ -82,7 +82,11 @@ sub addWord{
         #$word->{$key} = decode("UTF-8",$word->{$key});
         }
     }
-    printf " %-3.3s | %-8.8s | %-25.25s | %-8.8s | %-3.3s | %-2.2s | %-1.1s | %-25.25s | %-2.2s\n", $word->{lang} , $word->{idWordExt} ,$word->{word} ,$word->{type} ,, $word->{gender} , $word->{number} , $word->{'verbNumber'} ,$word->{'verbTime'}  ;
+
+    my $wordword = $word->{word};
+    $wordword =~ s/\s*/_/g;
+    
+    printf " %-3.3s | %-8.8s | %-25.25s | %-8.8s | %-3.3s | %-2.2s | %-1.1s | %-25.25s | %-2.2s\n", $word->{lang} , $word->{idWordExt} ,$wordword ,$word->{type} ,, $word->{gender} , $word->{number} , $word->{'verbNumber'} ,$word->{'verbTime'}  ;
     #Add to base
     u 'INSERT INTO luthorword ( idWordExt , word , type, gender, number, verbNumber, verbTime ) VALUES ( ?, ?, ?, ?, ?, ?, ? )' , $word->{idWordExt} , $word->{word} , $word->{type}, $word->{gender} , $word->{number} , $word->{'verbNumber'} ,$word->{'verbTime'} ;
 }
