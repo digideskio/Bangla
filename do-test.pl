@@ -11,12 +11,15 @@ use lib 'lib-perl';
 use LinkGrammar;
 use Test::More;
 use JavaScripting;
+use Config::General;
+
+my %conf = new Config::General("config.cfg")->getall;
 
 binmode(STDOUT, ':utf8');
 
-my $script = slurp("lang/fr/t/00-basic.js");
+my $gram = LinkGrammar->new(\%conf);
 
-my $gram = LinkGrammar->new();
+my $script = slurp( $ARGV[0] );
 
 my $js = JavaScripting->new({
     functions => {
@@ -27,7 +30,6 @@ my $js = JavaScripting->new({
 
 #Now call the javascript to extract word information from the base
 print "JSError : " ,$js->{error}, "\n" unless ( $js->run() );
-
 
 
 

@@ -7,9 +7,9 @@ word.funcs = new Array();
 while( func = word.functions.pop() ){
 
     var type = word.type.replace(/[^\w\-]/g,'');
-    if( type == "flex-art-df" ){ type = "art-df"; word.type = word.type.replace(/flex-/g,''); }
-    if( type == "flex-nom" ){ type = "nom"; word.type = word.type.replace(/flex-/g,''); }
-    if( type == "flex-adj" ){ type = "adj"; word.type = word.type.replace(/flex-/g,''); }
+    if( type == "flex-art-df" ){ type = "art-df";  } //word.type = word.type.replace(/flex-/g,'');
+    if( type == "flex-nom" ){ type = "nom";  } //word.type = word.type.replace(/flex-/g,'');
+    if( type == "flex-adj" ){ type = "adj";  } //word.type = word.type.replace(/flex-/g,'');
     func.variables = {};
     func.links = new Array();
     func.variables.genNum = getGenNum( func );

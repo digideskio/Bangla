@@ -1,4 +1,3 @@
-#!/usr/bin/perl
 package LinkGrammar;
 
 use strict;
@@ -17,14 +16,14 @@ $VERSION     = 1.00;
 @EXPORT_OK   = qw(getSentence);
 %EXPORT_TAGS = ( DEFAULT => [qw(&getSentence)] );
 
-
-
 sub new{
     my $self  = {};
 
+    my $conf = pop;
+
     $self->{exp} = new Expect;
     $self->{exp}->log_stdout(0);
-    $self->{exp}->spawn("/home/arthur/Sandbox/link-grammar/link-grammar/link-parser", "/home/arthur/Sandbox/link-grammar/data/fr") or die "Cannot spawn : $!\n";
+    $self->{exp}->spawn($conf->{'link-grammar-executable'},$conf->{'link-grammar-dictionnary'}) or die "Cannot spawn : $!\n";
     $self->{exp}->send("!links\n!postscript\n");
 
     bless($self);
