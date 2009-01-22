@@ -14,13 +14,15 @@ use Encode qw/encode decode/;
 use Data::Dumper;
 
 #Connect to Mysql
-mysqlcon '#p:localhost:piki:root:magda';
+#mysqlcon '#p:localhost:piki:root:magda';
+my $dbi = DBI->connect( "DBI:mysql:piki:localhost;mysql_compression=1", 'root', 'magda' ); 
 
 binmode(STDOUT, ':utf8');
 
 
-
-my @words = r "SELECT count(*) as compte, luthorword.* FROM luthorword GROUP BY word,type ORDER BY idWordExt ASC";
+#my @words = r "SELECT count(*) as compte, luthorword.* FROM luthorword GROUP BY word,type ORDER BY idWordExt ASC";
+my $sth = $dbh->prepare("SELECT count(*) as compte, luthorword.* FROM luthorword GROUP BY word,type ORDER BY idWordExt ASC");
+$sth->execute();
 
 #Lines
 my %outputs;
@@ -30,7 +32,8 @@ my $script = slurp "lang/fr/add-links.js";
 my $js = $rt->create_context();
 
 $js->bind_function( say           => sub { print @_,"\n"; } );
-$js->bind_function( getWord       => sub { return shift @words; } );
+#$js->bind_function( getWord       => sub { return shift @words; } );
+$js->bind_function( getWord       => sub { return $sth->fetchrow_hashref; } );
 $js->bind_function( getFunc       => sub { my ( $word, $type ) = @_; my @ret = r("SELECT * FROM luthorword WHERE word = ? AND type = ? " , $word , $type ); return(\@ret); } );
 $js->bind_function( sayWord       => sub { my ( $word ) = @_; printf "%-9.9s | %-9.9s | %-25.25s | %-10.10s | %-10.10s | %-2.2s | %-1.1s | %-25.25s | %-2.2s \n",, $word->{idWordExt} ,$word->{word} ,$word->{type} ,, $word->{gender} , $word->{number} , $word->{'verb-number'} ,$word->{'verb-time'}; } );
 $js->bind_function( addWord       => sub { my ( $word , $link ) = @_; print "$word : $link ;\n" ; if( !exists($outputs{$link}) ){ $outputs{$link} = []; }; push( @{$outputs{$link}} , $word ) } );
